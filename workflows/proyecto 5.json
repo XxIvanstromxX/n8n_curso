@@ -1,0 +1,1041 @@
+{
+  "name": "proyecto 5",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "n8n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b062898a-7c3f-418f-84cf-4e0c0c8cf27c",
+      "name": "Webhook",
+      "webhookId": "abe545c2-a849-4053-9b78-5eb262e36bb9"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bafe3a7f-a836-4acd-8c48-6e7fa1b05002",
+              "name": "number",
+              "value": "={{ $json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "21cae706-f148-4b05-8ed6-0638d9e8e83d",
+              "name": "name",
+              "value": "={{ $json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "703a6b58-881f-4adc-b0be-514f3aadad1f",
+              "name": "text",
+              "value": "={{ $json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "dc1655dc-441e-4383-8a07-81565e905e98",
+              "name": "timestamp",
+              "value": "={{ $json.body.date_time }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "2bfa065c-f851-4dc8-9c21-f1ea34c7aaf2",
+      "name": "limpieza de datos evo"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1GjQhG_QHsjHoqa1OGQJ9jMjP9t6eE3f4zcyreECEpMQ/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GjQhG_QHsjHoqa1OGQJ9jMjP9t6eE3f4zcyreECEpMQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "number": "={{ $json.number }}",
+            "name": "={{ $json.name }}",
+            "last_message": "={{ $json.text }}",
+            "first_contact": "={{ $json.timestamp }}",
+            "category": "={{ $json.category }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "number",
+              "displayName": "number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "first_contact",
+              "displayName": "first_contact",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_message",
+              "displayName": "last_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2464,
+        576
+      ],
+      "id": "7f7e5b81-b24f-4f0d-a932-3d968d0aaeb6",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wqg0Q3R1yhxLN5G6",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1GjQhG_QHsjHoqa1OGQJ9jMjP9t6eE3f4zcyreECEpMQ/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GjQhG_QHsjHoqa1OGQJ9jMjP9t6eE3f4zcyreECEpMQ/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "number",
+              "lookupValue": "={{ $json.number }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        432,
+        0
+      ],
+      "id": "b56f75bd-75f1-4f30-b946-61e6e82383b9",
+      "name": "Obtener usuarios",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wqg0Q3R1yhxLN5G6",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ee98e74a-5bd4-4a79-8148-afc6e8eab781",
+              "leftValue": "={{ $json.number }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        656,
+        0
+      ],
+      "id": "c84ba5b5-de80-4ca7-a7d9-7cc63548ae5b",
+      "name": "Verificar si existe usuario"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c1b5531b-e7f7-40aa-a607-02eba5303dc6",
+              "name": "number",
+              "value": "={{ $('limpieza de datos evo').item.json.number }}",
+              "type": "string"
+            },
+            {
+              "id": "7b1b3f74-f546-4eea-96e6-2832b7bc43e2",
+              "name": "name",
+              "value": "={{ $('limpieza de datos evo').item.json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "5337af0b-2c72-44ca-91c1-126d17eaf399",
+              "name": "text",
+              "value": "={{ $('limpieza de datos evo').item.json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "b515f6d6-cda9-4e72-8402-502b6c57066d",
+              "name": "timestamp",
+              "value": "={{ $('limpieza de datos evo').item.json.timestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "040ff92a-bdb3-47e8-9ae4-fb7d3c54c99e",
+              "name": "category",
+              "value": "={{ \"\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        880,
+        368
+      ],
+      "id": "a52c662c-51e2-441b-b7ac-5294f03b4aa5",
+      "name": "Mapeo de datos para lead"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.text.toLowerCase() }}",
+                    "rightValue": "={{ \"hola\" || \"Buenas tardes\" || \"Buenas tardes\"}}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "30f12e8c-c821-4dfb-93c4-1d50dfabab2a"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b3e06cbe-c040-439f-807c-3c6f8362201b",
+                    "leftValue": "={{ $json.text.toLowerCase() }}",
+                    "rightValue": "={{ \"venta\" }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "607551ab-e22a-4bdc-a30b-4d6596afa66e",
+                    "leftValue": "={{ $json.text.toLowerCase() }}",
+                    "rightValue": "={{\"soporte\"}}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        1184,
+        336
+      ],
+      "id": "f5ad2c9d-a347-4652-a0fc-df21aa5351fe",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2160,
+        544
+      ],
+      "id": "d1c25377-28f8-4729-a5d2-70c29dcc1382",
+      "name": "Merge",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ad3dbe98-4441-4f2e-a0e4-88fcf1dd27a3",
+              "name": "number",
+              "value": "={{ $json.number }}",
+              "type": "string"
+            },
+            {
+              "id": "26b39670-de46-4c53-94b1-634dc556e675",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "1ec2fe47-22cd-476e-be9f-1a41176a9f0c",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "f8c9f3d3-ccc2-4c9c-9b48-89723e7aba83",
+              "name": "timestamp",
+              "value": "={{ $json.timestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "8c91b800-6d39-485a-97de-b67d25607f65",
+              "name": "category",
+              "value": "={{ \"SALUDO\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        288
+      ],
+      "id": "1bfaa5dc-62ca-4bd8-8f03-c57daf49ebb7",
+      "name": "saludo",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ad3dbe98-4441-4f2e-a0e4-88fcf1dd27a3",
+              "name": "number",
+              "value": "={{ $json.number }}",
+              "type": "string"
+            },
+            {
+              "id": "26b39670-de46-4c53-94b1-634dc556e675",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "1ec2fe47-22cd-476e-be9f-1a41176a9f0c",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "f8c9f3d3-ccc2-4c9c-9b48-89723e7aba83",
+              "name": "timestamp",
+              "value": "={{ $json.timestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "8c91b800-6d39-485a-97de-b67d25607f65",
+              "name": "category",
+              "value": "={{ \"INTERES_COMPRA\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        480
+      ],
+      "id": "84c92c5d-abe5-4ec6-b971-04e53dec5c4e",
+      "name": "venta",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ad3dbe98-4441-4f2e-a0e4-88fcf1dd27a3",
+              "name": "number",
+              "value": "={{ $json.number }}",
+              "type": "string"
+            },
+            {
+              "id": "26b39670-de46-4c53-94b1-634dc556e675",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "1ec2fe47-22cd-476e-be9f-1a41176a9f0c",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "f8c9f3d3-ccc2-4c9c-9b48-89723e7aba83",
+              "name": "timestamp",
+              "value": "={{ $json.timestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "8c91b800-6d39-485a-97de-b67d25607f65",
+              "name": "category",
+              "value": "={{ \"SOPORTE\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        672
+      ],
+      "id": "c28963f2-8be9-4201-b87a-a5eb7cb6c4bc",
+      "name": "soporte",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ad3dbe98-4441-4f2e-a0e4-88fcf1dd27a3",
+              "name": "number",
+              "value": "={{ $json.number }}",
+              "type": "string"
+            },
+            {
+              "id": "26b39670-de46-4c53-94b1-634dc556e675",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "1ec2fe47-22cd-476e-be9f-1a41176a9f0c",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "f8c9f3d3-ccc2-4c9c-9b48-89723e7aba83",
+              "name": "timestamp",
+              "value": "={{ $json.timestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "8c91b800-6d39-485a-97de-b67d25607f65",
+              "name": "category",
+              "value": "={{ \"OTROS\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        880
+      ],
+      "id": "ffcaa456-cf67-4d88-a420-3874f4503b67",
+      "name": "otros",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1GjQhG_QHsjHoqa1OGQJ9jMjP9t6eE3f4zcyreECEpMQ/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GjQhG_QHsjHoqa1OGQJ9jMjP9t6eE3f4zcyreECEpMQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "number": "={{ $json.number }}",
+            "last_message": "={{ $('limpieza de datos evo').item.json.text }}"
+          },
+          "matchingColumns": [
+            "number"
+          ],
+          "schema": [
+            {
+              "id": "number",
+              "displayName": "number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "first_contact",
+              "displayName": "first_contact",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "last_message",
+              "displayName": "last_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1040,
+        -176
+      ],
+      "id": "ebd68e86-7e5a-4c90-a3a9-32ab7adcbff2",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wqg0Q3R1yhxLN5G6",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Clasifica el siguente mensaje: {{ $json.last_message }}",
+        "options": {
+          "systemMessage": "Eres un clasificador de mensajes de clientes\nTu tarea es identificar la categoría del mensaje entre las siguientes opciones:\n- INTERES_COMPRA\n- SOPORTE\n- SALUDO\n- OTROS\n\nResponde ÚNICAMENTE con una de esas categorías, sin explicación adicional."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1344,
+        -176
+      ],
+      "id": "903cad61-8ecb-44c5-87b0-09a0d1263fab",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1312,
+        0
+      ],
+      "id": "6876944d-1957-4710-a40e-921b5ff3b48d",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "d8WNmkTDxRd5jugV",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Update row in sheet').item.json.number }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1488,
+        48
+      ],
+      "id": "4507eaae-a4aa-4a62-b410-85c4c5e8f2c2",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1GjQhG_QHsjHoqa1OGQJ9jMjP9t6eE3f4zcyreECEpMQ/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GjQhG_QHsjHoqa1OGQJ9jMjP9t6eE3f4zcyreECEpMQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "number": "={{ $('Update row in sheet').item.json.number }}",
+            "category": "={{ $json.output }}"
+          },
+          "matchingColumns": [
+            "number"
+          ],
+          "schema": [
+            {
+              "id": "number",
+              "displayName": "number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "first_contact",
+              "displayName": "first_contact",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "last_message",
+              "displayName": "last_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1712,
+        -176
+      ],
+      "id": "5fb04f00-8cfe-48bc-881f-79e837e0d6e0",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wqg0Q3R1yhxLN5G6",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "limpieza de datos evo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "limpieza de datos evo": {
+      "main": [
+        [
+          {
+            "node": "Obtener usuarios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener usuarios": {
+      "main": [
+        [
+          {
+            "node": "Verificar si existe usuario",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar si existe usuario": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mapeo de datos para lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mapeo de datos para lead": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "saludo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "venta",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "soporte",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "otros",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        []
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "saludo": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "venta": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "soporte": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "otros": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "67195830-19d6-454c-b612-a0935ae55034",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "87eb47d621bc3b9a70ffd004d9515b1726e88e18e13b8e8c70c73487d96d3d6d"
+  },
+  "id": "hkipm6rGzYAy5U5p",
+  "tags": []
+}
