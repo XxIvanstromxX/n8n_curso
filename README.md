@@ -135,6 +135,14 @@ A continuación se describen los proyectos (clases) incluidos en la carpeta `wor
 - Integraciones: Evolution API (HTTP), LangChain, Google Gemini.
 - Notas: Mantener la sessionKey con el remoteJid para continuidad de conversación; actualizar URL del endpoint y credencial httpHeaderAuth.
 
+7) proyecto 5 (`workflows/proyecto 5.json`)
+- Objetivo: Capturar mensajes entrantes de WhatsApp, registrar/actualizar leads en Google Sheets y clasificar el mensaje (reglas e IA) para segmentación.
+- Trigger(s): Webhook (POST /n8n).
+- Nodos clave: Webhook → Set (limpieza de datos) → Google Sheets (lookup) → If (existe) → Update row → AI Agent (Gemini + memoria por número) → Update row; Else → Set (mapeo) → Switch (reglas) → Set (categoría) → Merge → Append row.
+- Flujo: Normaliza number, name, text y timestamp. Si el número ya existe, actualiza last_message y clasifica con IA para guardar category. Si no existe, clasifica por reglas (SALUDO, INTERES_COMPRA, SOPORTE, OTROS) y crea el lead con Append row.
+- Integraciones: Google Sheets, LangChain + Google Gemini.
+- Notas: Requiere credenciales de Google Sheets y Google Gemini; mantener sessionKey de memoria usando el número para continuidad.
+
 ## ⚙️ Configuración
 
 ### Evolution API
@@ -146,15 +154,7 @@ La configuración se encuentra en `evolutionAPI/.env`:
 
 ### n8n
 - **Timezone**: Configurado para México (America/Mexico_City)
-- **Runners**: Habilitados para ejecución distribuida
-- **Persistencia**: Datos almacenados en volumen Docker
-
-## 🎯 Casos de Uso del Curso
-
-Durante el curso desarrollamos workflows que cubren:
-- Automatización de respuestas en WhatsApp
-- Integración con servicios de IA para generar contenido
-- Procesamiento de mensajes y datos
+- **Runners
 - Flujos de trabajo complejos con múltiples integraciones
 - Gestión de contactos y conversaciones
 
